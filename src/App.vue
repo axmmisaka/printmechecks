@@ -4,10 +4,7 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <template>
 
-    <div class="container">
-        <div style="padding-bottom: 20px; padding-top: 20px;">
-            <img  src="@/assets/pmc.png"  />
-        </div>
+    <div class="container navs">
         <ul class="nav nav-tabs">
             <li class="nav-item">
                 <RouterLink to="/" class="nav-link" :class="{'active': $route.path == '/'}">Check</RouterLink>

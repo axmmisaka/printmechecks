@@ -13,23 +13,14 @@
                 <div class="amount-box" style="position: absolute; top: 175px; left: 950px">
 
                 </div>
-                <div class="amount-data" style="position: absolute; top: 182px; left: 970px">{{formatMoney(check.amount)}}</div>
+                <div class="amount-data" style="position: absolute; top: 182px; left: 970px">{{ `***${check.amount}***` }}</div>
                 <div class="pay-to-data" style="position: absolute; top: 180px; left: 180px">{{check.payTo}}</div>
                 <div class="pay-to" style="position: absolute; top: 170px; left: 60px">
                     Pay to the <br>Order of <span class="payto-line"></span>
                 </div>
                 <div class="amount-line-data" ref="line" style="position: absolute; top: 240px; left: 100px">
-                    {{toWords(check.amount)}} 
-                    {{check.amount.includes('.') ? ` and ${check.amount.split('.')[1]}/100` : `and 00/100`}}
+                    {{`***${toWords(check.amount)}***`}} 
                 </div>
-                <img src="/src/assets/check-line.png"
-                    style="max-height: 16px; position: absolute; top: 236px;" 
-                    :style="{
-                        'left': (check.lineLength + 128) + 'px',
-                        'width': '400px',
-                        'display': check.lineLength > 600 ? 'none': '',
-                        'max-width': (780 - check.lineLength) + 'px'
-                    }"/>
                 <div class="amount-line" style="position: absolute; top: 250px; left: 60px">
                     <span class="dollar-line"></span>
                 </div>
@@ -125,7 +116,7 @@
 
 <script setup lang="ts">
 import print from 'print-js';
-import { default as converter } from 'number-to-words';
+import { ToWords } from 'to-words';
 import { ref, reactive, nextTick, watch} from 'vue'
 
 const check = reactive({
@@ -147,15 +138,24 @@ const check = reactive({
 })
 
 
-function toWords (number: string) {
-    return converter.toWords(number)
+const toWordsTool = new ToWords({
+  localeCode: 'en-US',
+  converterOptions: {
+    currency: true,
+    ignoreDecimal: false,
+    ignoreZeroCurrency: false,
+    doNotAddOnly: true,
+  },
+});
+
+const toWords: (denom: number | string) => string = (denom) => {
+    try {
+        return toWordsTool.convert(Number(denom), );
+    } catch (e) {
+        return `${e}`;
+    }
 }
 
-
-function formatMoney (number: string) {
-    var numberFloat: float = parseFloat(number)
-    return numberFloat.toLocaleString('en-US', {style: 'decimal', minimumFractionDigits: 2, maximumFractionDigits: 2})
-}
 
 function printCheck () {
     window.print()
@@ -177,29 +177,23 @@ watch(check, async () => {
 <style>
 @media print {
     .check-box {
-        background-color: white;
+        background-color: transparent;
         position: fixed;
         top: 0;
         left: 0;
         margin: 0;
+        border: unset;
         padding: 0px;
     }
     .check-data {
         display: none;
     }
+    .navs {
+        display: none;
+    }
 }
 label {
     font-weight: bold;
-}
-.memo-data {
-    font-family: Caveat;
-    font-size: 30px;
-    transform: rotate(-2deg);
-}
-.signature-data {
-    font-family: Caveat;
-    font-size: 40px;
-    transform: rotate(-2deg);
 }
 .amount-line-data {
     text-transform: capitalize;
@@ -211,7 +205,6 @@ label {
 .check-data {
     margin-top: 50px;
     padding: 50px 120px;
-    border-top: 1px solid #e6e6e6;
 }
 .bank-name{
     font-size: 20px;
@@ -239,13 +232,10 @@ label {
 }
 .check-box {
     width: 1200px;
-    height: 1553px;
-    border: 1px solid #e6e6e6;
-    background-color: white;
+    height: 500px;
     margin: 0 auto;
-    background: url('../assets/checkbg.png');
-    background-repeat: no-repeat;
-    background-size: contain;
+    background-color: #e5e5f7;
+    background: linear-gradient(135deg, #e9eaff55 25%, transparent 25%) -10px 0/ 20px 20px, linear-gradient(225deg, #e9eaff 25%, transparent 25%) -10px 0/ 20px 20px, linear-gradient(315deg, #e9eaff55 25%, transparent 25%) 0px 0/ 20px 20px, linear-gradient(45deg, #e9eaff 25%, #fdfdff 25%) 0px 0/ 20px 20px;
 }
 
 #check-box {
@@ -263,7 +253,6 @@ label {
     font-size: 37px;
 }
 .dollar-line::after{
-    content: "Dollars";
     font-size: 18px;
     position: absolute;
     right: -73px;
@@ -284,15 +273,6 @@ label {
     border-right: 1px solid black;
     height: 28px;
     margin-top: -32px;
-}
-.check-line-img {
-    display: block;
-    height: 16px;
-    background: url(/src/assets/check-line.png);
-    background-repeat: no-repeat;
-    background-size: contain;
-    position: absolute;
-    top: 236px;
 }
 </style>
 
