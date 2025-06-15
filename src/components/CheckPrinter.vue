@@ -269,15 +269,10 @@ label {
     font-weight: bold;
 }
 .memo-data {
-    font-family: Caveat;
-    font-size: 30px;
     max-width: 350px;
-    line-height: 0.65;
 }
 .signature-data {
-    font-family: Caveat;
-    font-size: 40px;
-    transform: rotate(-2deg);
+    font-weight: bold;
 }
 .amount-line-data {
     text-transform: capitalize;
