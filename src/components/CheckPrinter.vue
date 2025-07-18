@@ -1,117 +1,134 @@
 <template>
-    <div class="wrapper" id="wrapper" style="position: relative;">
-        <div class="check-box" id="check-box">
-            <div style="position: relative;" id="check-box-print">
-                <div class="account-holder-name" style="position: absolute; top: 40px; left: 60px">{{check.accountHolderName}}</div>
+    <div id="wrapper" class="wrapper" style="position: relative">
+        <div id="check-box" class="check-box">
+            <div id="check-box-print" style="position: relative">
+                <div class="account-holder-name" style="position: absolute; top: 40px; left: 60px">
+                    {{ check.accountHolderName }}
+                </div>
                 <div class="account-holder-address" style="position: absolute; top: 70px; left: 60px">
-                    {{check.accountHolderAddress}}<br>
-                    {{check.accountHolderCity}}, {{check.accountHolderState}} {{check.accountHolderZip}}
+                    {{ check.accountHolderAddress }}<br />
+                    {{ check.accountHolderCity }}, {{ check.accountHolderState }} {{ check.accountHolderZip }}
                 </div>
-                <div class="check-number-human" style="position: absolute; top: 40px; left: 1060px">{{check.checkNumber}}</div>
-                <div class="date-data" style="position: absolute; top: 80px; left: 850px">{{check.date}}</div>
-                <div class="date" style="position: absolute; top: 90px; left: 760px">Date: _____________________ </div>
-                <div class="amount-box" style="position: absolute; top: 175px; left: 950px">
-
+                <div class="check-number-human" style="position: absolute; top: 40px; left: 1060px">
+                    {{ check.checkNumber }}
                 </div>
-                <div class="amount-data" style="position: absolute; top: 182px; left: 970px">{{formatMoney(check.amount)}}</div>
-                <div class="pay-to-data" style="position: absolute; top: 180px; left: 180px">{{check.payTo}}</div>
+                <div class="date-data" style="position: absolute; top: 80px; left: 850px">
+                    {{ check.date }}
+                </div>
+                <div class="date" style="position: absolute; top: 90px; left: 760px">Date: _____________________</div>
+                <div class="amount-box" style="position: absolute; top: 175px; left: 950px" />
+                <div class="amount-data" style="position: absolute; top: 182px; left: 970px">
+                    {{ formatMoney(check.amount) }}
+                </div>
+                <div class="pay-to-data" style="position: absolute; top: 180px; left: 180px">
+                    {{ check.payTo }}
+                </div>
                 <div class="pay-to" style="position: absolute; top: 170px; left: 60px">
-                    Pay to the <br>Order of <span class="payto-line"></span>
+                    Pay to the <br />Order of <span class="payto-line" />
                 </div>
                 <div class="amount-line-data" style="position: absolute; top: 240px; left: 100px">
                     ***
-                    {{toWords(check.amount)}} 
+                    {{ toWords(check.amount) }}
                     ***
                 </div>
                 <div class="amount-line" style="position: absolute; top: 250px; left: 60px">
-                    <span class="dollar-line"></span>
+                    <span class="dollar-line" />
                 </div>
-                <div class="bank-name" style="position: absolute; top: 300px; left: 60px">{{check.bankName}}</div>
-                <div class="memo-data" style="position: absolute; top: 367px; left: 120px">{{check.memo}}</div>
+                <div class="bank-name" style="position: absolute; top: 300px; left: 60px">
+                    {{ check.bankName }}
+                </div>
+                <div class="memo-data" style="position: absolute; top: 367px; left: 120px">
+                    {{ check.memo }}
+                </div>
                 <div class="memo" style="position: absolute; top: 390px; left: 60px">
                     Memo: ____________________________________
                 </div>
-                <div class="signature-data" style="position: absolute; top: 366px; left: 770px">{{check.signature}}</div>
+                <div class="signature-data" style="position: absolute; top: 366px; left: 770px">
+                    {{ check.signature }}
+                </div>
                 <div class="signature" style="position: absolute; top: 390px; left: 750px">
                     _________________________________________________
                 </div>
                 <div class="banking" style="position: absolute; top: 420px; left: 80px">
-                    <div class="routing" style="display: inline;">
-                        a{{check.routingNumber}}a
+                    <div class="routing" style="display: inline">a{{ check.routingNumber }}a</div>
+                    <div class="bank-account" style="display: inline">{{ check.bankAccountNumber }}c</div>
+                    <div class="check-number" style="display: inline; margin-left: 20px">
+                        {{ check.checkNumber }}
                     </div>
-                    <div class="bank-account" style="display: inline;">{{check.bankAccountNumber}}c</div>
-                    <div class="check-number" style="display: inline; margin-left:20px">{{check.checkNumber}}</div>
                 </div>
             </div>
         </div>
         <div class="check-data" style="position: absolute; top: 450px">
-            <div class="alert alert-primary" role="alert"><strong>Background does not print.</strong></div>
-            <button type="button" style="float: right;" class="btn btn-primary" @click="printCheck">Print (Ctrl + P)</button>
+            <div class="alert alert-primary" role="alert">
+                <strong>Background does not print.</strong>
+            </div>
+            <button type="button" style="float: right" class="btn btn-primary" @click="printCheck">
+                Print (Ctrl + P)
+            </button>
             <form class="row g-3">
                 <div class="col-md-6">
                     <label for="acctHolderName" class="form-label">Account Holder Name</label>
-                    <input type="text" class="form-control" id="acctHolderName" v-model="check.accountHolderName">
+                    <input id="acctHolderName" v-model="check.accountHolderName" type="text" class="form-control" />
                 </div>
-                <div class="col-md-6">
-                </div>
+                <div class="col-md-6" />
                 <div class="col-md-4">
                     <label for="inputAddress" class="form-label">Address</label>
-                    <input type="text" class="form-control" id="inputAddress" v-model="check.accountHolderAddress">
+                    <input id="inputAddress" v-model="check.accountHolderAddress" type="text" class="form-control" />
                 </div>
                 <div class="col-md-2">
                     <label for="inputCity" class="form-label">City</label>
-                    <input type="text" class="form-control" v-model="check.accountHolderCity">
+                    <input v-model="check.accountHolderCity" type="text" class="form-control" />
                 </div>
                 <div class="col-md-2">
                     <label for="inputState" class="form-label">State</label>
-                    <input type="text" class="form-control" v-model="check.accountHolderState">
+                    <input v-model="check.accountHolderState" type="text" class="form-control" />
                 </div>
                 <div class="col-md-2">
                     <label for="inputZip" class="form-label">Zip</label>
-                    <input type="text" class="form-control" v-model="check.accountHolderZip">
+                    <input v-model="check.accountHolderZip" type="text" class="form-control" />
                 </div>
             </form>
-            <form class="row g-3" style="margin-top: 30px; border-top: 1px solid #e7e7e7;">
+            <form class="row g-3" style="margin-top: 30px; border-top: 1px solid #e7e7e7">
                 <div class="col-md-2">
                     <label for="inputCheckNum" class="form-label">Check Number</label>
-                    <input type="text" class="form-control" id="inputCheckNum" v-model="check.checkNumber">
+                    <input id="inputCheckNum" v-model="check.checkNumber" type="text" class="form-control" />
                 </div>
                 <div class="col-md-4">
                     <label for="inputAddress" class="form-label">Bank Name</label>
-                    <input type="text" class="form-control" id="inputAddress" v-model="check.bankName">
+                    <input id="inputAddress" v-model="check.bankName" type="text" class="form-control" />
                 </div>
                 <div class="col-md-2">
                     <label for="inputCity" class="form-label">Routing #</label>
-                    <input type="text" class="form-control" v-model="check.routingNumber">
+                    <input v-model="check.routingNumber" type="text" class="form-control" />
                 </div>
                 <div class="col-md-2">
                     <label for="inputState" class="form-label">Account #</label>
-                    <input type="text" class="form-control" v-model="check.bankAccountNumber">
+                    <input v-model="check.bankAccountNumber" type="text" class="form-control" />
                 </div>
                 <div class="col-md-6">
                     <label for="inputZip" class="form-label">Memo</label>
-                    <input type="text" class="form-control" v-model="check.memo">
+                    <input v-model="check.memo" type="text" class="form-control" />
                 </div>
             </form>
-            <form class="row g-3" style="margin-top: 30px; border-top: 1px solid #e7e7e7;">
+            <form class="row g-3" style="margin-top: 30px; border-top: 1px solid #e7e7e7">
                 <div class="col-md-2">
                     <label for="inputCheckAmount" class="form-label">Amount</label>
-                    <input type="text" class="form-control" id="inputCheckAmount" v-model="check.amount">
+                    <input id="inputCheckAmount" v-model="check.amount" type="text" class="form-control" />
                 </div>
                 <div class="col-md-6">
                     <label for="inputZip" class="form-label">Pay To</label>
-                    <input type="text" class="form-control" v-model="check.payTo">
+                    <input v-model="check.payTo" type="text" class="form-control" />
                 </div>
                 <div class="col-md-2">
                     <label for="inputDate" class="form-label">Date</label>
-                    <input type="text" class="form-control" id="inputDate" v-model="check.date">
+                    <input id="inputDate" v-model="check.date" type="text" class="form-control" />
                 </div>
                 <div class="col-md-6">
                     <label for="inputZip" class="form-label">Signature</label>
-                    <input type="text" class="form-control" v-model="check.signature">
+                    <input v-model="check.signature" type="text" class="form-control" />
                 </div>
             </form>
-            <div class="col-12" style="margin-top: 30px;">
+            <div class="col-12" style="margin-top: 30px">
                 <button type="button" class="btn btn-primary" @click="saveToHistory">Save to History</button>
             </div>
         </div>
@@ -119,34 +136,34 @@
 </template>
 
 <script setup lang="ts">
-import { ToWords } from 'to-words';
-import { reactive, onMounted, onUnmounted } from 'vue'
-import { formatMoney } from '@/utilities.ts';
-import { useAppStore } from '../stores/app.ts'
-import { type Check } from '@/types.ts';
+import { ToWords } from "to-words";
+import { reactive, onMounted, onUnmounted } from "vue";
+import { formatMoney } from "@/utilities.ts";
+import { useAppStore } from "../stores/app.ts";
+import { type Check } from "@/types.ts";
 
-const state = useAppStore()
+const state = useAppStore();
 
 const toWordsTool = new ToWords({
-  localeCode: 'en-US',
-  converterOptions: {
-    currency: true,
-    ignoreDecimal: false,
-    ignoreZeroCurrency: false,
-    doNotAddOnly: true,
-  },
+    localeCode: "en-US",
+    converterOptions: {
+        currency: true,
+        ignoreDecimal: false,
+        ignoreZeroCurrency: false,
+        doNotAddOnly: true,
+    },
 });
 
 const toWords: (denom: number | string) => string = (denom) => {
     try {
-        return toWordsTool.convert(Number(denom), );
+        return toWordsTool.convert(Number(denom));
     } catch (e) {
         return `${e}`;
     }
-}
+};
 
 const printCheck = () => {
-    const style = document.createElement('style');
+    const style = document.createElement("style");
     style.textContent = `
       @media print {
         @page {
@@ -186,79 +203,74 @@ const printCheck = () => {
     document.head.appendChild(style);
     window.print();
     style.remove();
-}
+};
 
 const saveToHistory = () => {
-    let checkList = JSON.parse(localStorage.getItem('checkList') || '[]')
-    checkList.push(check)
-    localStorage.setItem('checkList', JSON.stringify(checkList))
-}
+    let checkList = JSON.parse(localStorage.getItem("checkList") || "[]");
+    checkList.push(check);
+    localStorage.setItem("checkList", JSON.stringify(checkList));
+};
 
 const genNewCheck = () => {
-    const checkList = JSON.parse(localStorage.getItem('checkList') ?? '[]')
-    const recentCheck = checkList[checkList.length - 1]
+    const checkList = JSON.parse(localStorage.getItem("checkList") ?? "[]");
+    const recentCheck = checkList[checkList.length - 1];
     const newCheck: Check = {
-        accountHolderName: recentCheck?.accountHolderName ?? 'John Smith',
-        accountHolderAddress: recentCheck?.accountHolderAddress ?? '123 Cherry Tree Lane',
-        accountHolderCity: recentCheck?.accountHolderCity ?? 'New York',
-        accountHolderState: recentCheck?.accountHolderState ?? 'NY',
-        accountHolderZip: recentCheck?.accountHolderZip ?? '10001',
-        bankName: recentCheck?.bankName ?? 'Bank Name, INC',
-        routingNumber: recentCheck?.routingNumber ?? '022303659',
-        bankAccountNumber: recentCheck?.bankAccountNumber ?? '000000000000',
-        signature: recentCheck?.signature ?? 'John Smith',
-        checkNumber: recentCheck?.checkNumber ? (`${parseInt(recentCheck?.checkNumber) + 1}`) : '100',
+        accountHolderName: recentCheck?.accountHolderName ?? "John Smith",
+        accountHolderAddress: recentCheck?.accountHolderAddress ?? "123 Cherry Tree Lane",
+        accountHolderCity: recentCheck?.accountHolderCity ?? "New York",
+        accountHolderState: recentCheck?.accountHolderState ?? "NY",
+        accountHolderZip: recentCheck?.accountHolderZip ?? "10001",
+        bankName: recentCheck?.bankName ?? "Bank Name, INC",
+        routingNumber: recentCheck?.routingNumber ?? "022303659",
+        bankAccountNumber: recentCheck?.bankAccountNumber ?? "000000000000",
+        signature: recentCheck?.signature ?? "John Smith",
+        checkNumber: recentCheck?.checkNumber ? `${parseInt(recentCheck?.checkNumber) + 1}` : "100",
         date: new Date().toLocaleDateString(),
-        amount: '0.00',
-        payTo: '',
-        memo: ''
-    }
+        amount: "0.00",
+        payTo: "",
+        memo: "",
+    };
 
-  return newCheck;
-}
+    return newCheck;
+};
 
-const check: Check = reactive(
-    genNewCheck()
-)
-
+const check: Check = reactive(genNewCheck());
 
 const handlePrintShortcut = (event: KeyboardEvent) => {
-    if (event.ctrlKey && event.key === 'p') {
+    if (event.ctrlKey && event.key === "p") {
         event.preventDefault();
         printCheck();
     }
-}
+};
 
 onMounted(() => {
     if (state.check) {
-        check.accountHolderName = state.check.accountHolderName
-        check.accountHolderAddress = state.check.accountHolderAddress
-        check.accountHolderCity = state.check.accountHolderCity
-        check.accountHolderState = state.check.accountHolderState
-        check.accountHolderZip = state.check.accountHolderZip
-        check.checkNumber = state.check.checkNumber
-        check.date = state.check.date
-        check.bankName = state.check.bankName
-        check.amount = state.check.amount
-        check.payTo = state.check.payTo
-        check.memo = state.check.memo
-        check.signature = state.check.signature
-        check.routingNumber = state.check.routingNumber
-        check.bankAccountNumber = state.check.bankAccountNumber
+        check.accountHolderName = state.check.accountHolderName;
+        check.accountHolderAddress = state.check.accountHolderAddress;
+        check.accountHolderCity = state.check.accountHolderCity;
+        check.accountHolderState = state.check.accountHolderState;
+        check.accountHolderZip = state.check.accountHolderZip;
+        check.checkNumber = state.check.checkNumber;
+        check.date = state.check.date;
+        check.bankName = state.check.bankName;
+        check.amount = state.check.amount;
+        check.payTo = state.check.payTo;
+        check.memo = state.check.memo;
+        check.signature = state.check.signature;
+        check.routingNumber = state.check.routingNumber;
+        check.bankAccountNumber = state.check.bankAccountNumber;
     }
-    state.check = null
+    state.check = null;
 
-    window.addEventListener('keydown', handlePrintShortcut);
+    window.addEventListener("keydown", handlePrintShortcut);
 });
 
 onUnmounted(() => {
-    window.removeEventListener('keydown', handlePrintShortcut);
+    window.removeEventListener("keydown", handlePrintShortcut);
 });
-
 </script>
 
 <style>
-
 label {
     font-weight: bold;
 }
@@ -271,7 +283,9 @@ label {
 .amount-line-data {
     text-transform: capitalize;
 }
-.date-data, .pay-to-data, .amount-data{
+.date-data,
+.pay-to-data,
+.amount-data {
     font-size: 20px;
     font-weight: bold;
 }
@@ -280,7 +294,7 @@ label {
     padding: 50px 120px;
     border-top: 1px solid #e6e6e6;
 }
-.bank-name{
+.bank-name {
     font-size: 20px;
     font-weight: bold;
 }
@@ -310,7 +324,11 @@ label {
     height: 500px;
     margin: 0 auto;
     background-color: #e5e5f7;
-    background: linear-gradient(135deg, #e9eaff55 25%, transparent 25%) -10px 0/ 20px 20px, linear-gradient(225deg, #e9eaff 25%, transparent 25%) -10px 0/ 20px 20px, linear-gradient(315deg, #e9eaff55 25%, transparent 25%) 0px 0/ 20px 20px, linear-gradient(45deg, #e9eaff 25%, #fdfdff 25%) 0px 0/ 20px 20px;
+    background:
+        linear-gradient(135deg, #e9eaff55 25%, transparent 25%) -10px 0/ 20px 20px,
+        linear-gradient(225deg, #e9eaff 25%, transparent 25%) -10px 0/ 20px 20px,
+        linear-gradient(315deg, #e9eaff55 25%, transparent 25%) 0px 0/ 20px 20px,
+        linear-gradient(45deg, #e9eaff 25%, #fdfdff 25%) 0px 0/ 20px 20px;
 }
 
 #check-box {
@@ -318,13 +336,12 @@ label {
 }
 
 @font-face {
-    font-family: 'banking';
-    src: url('../assets/micrenc.ttf');
+    font-family: "banking";
+    src: url("../assets/micrenc.ttf");
 }
 
-
 .banking {
-    font-family: 'banking';
+    font-family: "banking";
     font-size: 37px;
 }
 .dollar-line {

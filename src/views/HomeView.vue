@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import CheckPrinter from '../components/CheckPrinter.vue'
+import CheckPrinter from "../components/CheckPrinter.vue";
 </script>
 
 <template>
-  <main>
-    <CheckPrinter />
-  </main>
+    <main>
+        <CheckPrinter />
+    </main>
 </template>
