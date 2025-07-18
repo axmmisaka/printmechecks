@@ -18,7 +18,7 @@
                 <div class="pay-to" style="position: absolute; top: 170px; left: 60px">
                     Pay to the <br>Order of <span class="payto-line"></span>
                 </div>
-                <div class="amount-line-data" ref="line" style="position: absolute; top: 240px; left: 100px">
+                <div class="amount-line-data" style="position: absolute; top: 240px; left: 100px">
                     ***
                     {{toWords(check.amount)}} 
                     ***
@@ -49,8 +49,8 @@
             <button type="button" style="float: right;" class="btn btn-primary" @click="printCheck">Print (Ctrl + P)</button>
             <form class="row g-3">
                 <div class="col-md-6">
-                    <label for="inputEmail4" class="form-label">Account Holder Name</label>
-                    <input type="email" class="form-control" id="inputEmail4" v-model="check.accountHolderName">
+                    <label for="acctHolderName" class="form-label">Account Holder Name</label>
+                    <input type="text" class="form-control" id="acctHolderName" v-model="check.accountHolderName">
                 </div>
                 <div class="col-md-6">
                 </div>
@@ -73,8 +73,8 @@
             </form>
             <form class="row g-3" style="margin-top: 30px; border-top: 1px solid #e7e7e7;">
                 <div class="col-md-2">
-                    <label for="inputEmail4" class="form-label">Check Number</label>
-                    <input type="email" class="form-control" id="inputEmail4" v-model="check.checkNumber">
+                    <label for="inputCheckNum" class="form-label">Check Number</label>
+                    <input type="text" class="form-control" id="inputCheckNum" v-model="check.checkNumber">
                 </div>
                 <div class="col-md-4">
                     <label for="inputAddress" class="form-label">Bank Name</label>
@@ -95,16 +95,16 @@
             </form>
             <form class="row g-3" style="margin-top: 30px; border-top: 1px solid #e7e7e7;">
                 <div class="col-md-2">
-                    <label for="inputEmail4" class="form-label">Amount</label>
-                    <input type="email" class="form-control" id="inputEmail4" v-model="check.amount">
+                    <label for="inputCheckAmount" class="form-label">Amount</label>
+                    <input type="text" class="form-control" id="inputCheckAmount" v-model="check.amount">
                 </div>
                 <div class="col-md-6">
                     <label for="inputZip" class="form-label">Pay To</label>
                     <input type="text" class="form-control" v-model="check.payTo">
                 </div>
                 <div class="col-md-2">
-                    <label for="inputEmail4" class="form-label">Date</label>
-                    <input type="email" class="form-control" id="inputEmail4" v-model="check.date">
+                    <label for="inputDate" class="form-label">Date</label>
+                    <input type="text" class="form-control" id="inputDate" v-model="check.date">
                 </div>
                 <div class="col-md-6">
                     <label for="inputZip" class="form-label">Signature</label>
@@ -120,9 +120,10 @@
 
 <script setup lang="ts">
 import { ToWords } from 'to-words';
-import { ref, reactive, nextTick, watch, onMounted, onUnmounted } from 'vue'
-import { formatMoney } from '../utilities.ts'
+import { reactive, onMounted, onUnmounted } from 'vue'
+import { formatMoney } from '@/utilities.ts';
 import { useAppStore } from '../stores/app.ts'
+import { type Check } from '@/types.ts';
 
 const state = useAppStore()
 
@@ -144,7 +145,7 @@ const toWords: (denom: number | string) => string = (denom) => {
     }
 }
 
-function printCheck () {
+const printCheck = () => {
     const style = document.createElement('style');
     style.textContent = `
       @media print {
@@ -187,47 +188,41 @@ function printCheck () {
     style.remove();
 }
 
-function saveToHistory () {
+const saveToHistory = () => {
     let checkList = JSON.parse(localStorage.getItem('checkList') || '[]')
     checkList.push(check)
     localStorage.setItem('checkList', JSON.stringify(checkList))
 }
 
-function genNewCheck () {
-    let checkList = JSON.parse(localStorage.getItem('checkList') || '[]')
-    let recentCheck = checkList[checkList.length - 1]
-    let check = {}
-    check.accountHolderName = recentCheck?.accountHolderName || 'John Smith'
-    check.accountHolderAddress = recentCheck?.accountHolderAddress || '123 Cherry Tree Lane'
-    check.accountHolderCity = recentCheck?.accountHolderCity || 'New York'
-    check.accountHolderState = recentCheck?.accountHolderState || 'NY'
-    check.accountHolderZip = recentCheck?.accountHolderZip || '10001'
-    check.checkNumber = recentCheck?.checkNumber ? (parseInt(recentCheck?.checkNumber) + 1) : '100'
-    check.date = new Date().toLocaleDateString()
-    check.bankName = recentCheck?.bankName || 'Bank Name, INC'
-    check.amount = '0.00'
-    check.payTo = 'Michael Johnson'
-    check.memo = recentCheck?.memo || 'Rent'
-    check.signature = recentCheck?.signature || 'John Smith'
-    check.routingNumber = recentCheck?.routingNumber || '022303659'
-    check.bankAccountNumber = recentCheck?.bankAccountNumber || '000000000000'
-    return check
+const genNewCheck = () => {
+    const checkList = JSON.parse(localStorage.getItem('checkList') ?? '[]')
+    const recentCheck = checkList[checkList.length - 1]
+    const newCheck: Check = {
+        accountHolderName: recentCheck?.accountHolderName ?? 'John Smith',
+        accountHolderAddress: recentCheck?.accountHolderAddress ?? '123 Cherry Tree Lane',
+        accountHolderCity: recentCheck?.accountHolderCity ?? 'New York',
+        accountHolderState: recentCheck?.accountHolderState ?? 'NY',
+        accountHolderZip: recentCheck?.accountHolderZip ?? '10001',
+        bankName: recentCheck?.bankName ?? 'Bank Name, INC',
+        routingNumber: recentCheck?.routingNumber ?? '022303659',
+        bankAccountNumber: recentCheck?.bankAccountNumber ?? '000000000000',
+        signature: recentCheck?.signature ?? 'John Smith',
+        checkNumber: recentCheck?.checkNumber ? (`${parseInt(recentCheck?.checkNumber) + 1}`) : '100',
+        date: new Date().toLocaleDateString(),
+        amount: '0.00',
+        payTo: '',
+        memo: ''
+    }
+
+  return newCheck;
 }
 
-const check = reactive(
+const check: Check = reactive(
     genNewCheck()
 )
 
-const line = ref(null)
 
-watch(check, async () => {
-    await nextTick(() => {
-        let computedLine = line?.value?.clientWidth
-        check.lineLength = computedLine
-    })
-}, { immediate: true })
-
-function handlePrintShortcut(event: KeyboardEvent) {
+const handlePrintShortcut = (event: KeyboardEvent) => {
     if (event.ctrlKey && event.key === 'p') {
         event.preventDefault();
         printCheck();
@@ -331,13 +326,6 @@ label {
 .banking {
     font-family: 'banking';
     font-size: 37px;
-}
-.dollar-line::after{
-    content: "Dollars";
-    font-size: 18px;
-    position: absolute;
-    right: -73px;
-    top: 0;
 }
 .dollar-line {
     width: 840px;

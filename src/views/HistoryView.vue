@@ -36,7 +36,7 @@
 <style>
 </style>
 
-<script setup>
+<script setup lang="ts">
 import {formatMoney} from '../utilities.ts'
 import { ref, onMounted} from 'vue'
 import { useAppStore } from '../stores/app.ts'

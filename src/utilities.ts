@@ -1,5 +1,5 @@
 function formatMoney (number: string) {
-    var numberFloat: float = parseFloat(number)
+    var numberFloat: number = parseFloat(number)
     return numberFloat.toLocaleString('en-US', {style: 'decimal', minimumFractionDigits: 2, maximumFractionDigits: 2})
 }
 
