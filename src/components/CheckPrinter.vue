@@ -119,7 +119,6 @@
 </template>
 
 <script setup lang="ts">
-import print from 'print-js';
 import { ToWords } from 'to-words';
 import { ref, reactive, nextTick, watch, onMounted, onUnmounted } from 'vue'
 import { formatMoney } from '../utilities.ts'
