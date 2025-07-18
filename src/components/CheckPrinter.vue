@@ -38,16 +38,13 @@
                 <div class="bank-name" style="position: absolute; top: 300px; left: 60px">
                     {{ check.bankName }}
                 </div>
-                <div class="memo-data" style="position: absolute; top: 367px; left: 120px">
-                    {{ check.memo }}
-                </div>
-                <div class="memo" style="position: absolute; top: 390px; left: 60px">
-                    Memo: ____________________________________
+                <div class="memo-data" style="position: absolute; top: 340px; left: 60px">
+                    <span style="font-weight: bolder;" v-if="check.memo">Memo: </span>{{ check.memo }}
                 </div>
                 <div class="signature-data" style="position: absolute; top: 366px; left: 770px">
                     {{ check.signature }}
                 </div>
-                <div class="signature" style="position: absolute; top: 390px; left: 750px">
+                <div class="signature" style="position: absolute; top: 390px; left: 850px">
                     _________________________________________________
                 </div>
                 <div class="banking" style="position: absolute; top: 420px; left: 80px">
@@ -116,7 +113,7 @@
                 </div>
                 <div class="col-md-6">
                     <label for="inputZip" class="form-label">Memo</label>
-                    <input v-model="check.memo" type="text" class="form-control" />
+                    <textarea v-model="check.memo" spellcheck="true" class="form-control" />
                 </div>
             </form>
             <form class="row g-3" style="margin-top: 30px; border-top: 1px solid #e7e7e7">
@@ -286,7 +283,9 @@ label {
     font-weight: bold;
 }
 .memo-data {
-    max-width: 350px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    max-width: 750px;
 }
 .signature-data {
     font-weight: bold;
