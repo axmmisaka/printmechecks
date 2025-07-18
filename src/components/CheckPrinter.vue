@@ -7,7 +7,8 @@
                 </div>
                 <div class="account-holder-address" style="position: absolute; top: 70px; left: 60px">
                     {{ check.accountHolderAddress }}<br />
-                    {{ check.accountHolderCity }}, {{ check.accountHolderState }} {{ check.accountHolderZip }}
+                    {{ check.accountHolderCity }}, {{ check.accountHolderState }} {{ check.accountHolderZip }}<br />
+                    {{ check.accountHolderPhoneNumber ?? "" }}
                 </div>
                 <div class="check-number-human" style="position: absolute; top: 40px; left: 1060px">
                     {{ check.checkNumber }}
@@ -70,7 +71,15 @@
                     <label for="acctHolderName" class="form-label">Account Holder Name</label>
                     <input id="acctHolderName" v-model="check.accountHolderName" type="text" class="form-control" />
                 </div>
-                <div class="col-md-6" />
+                <div class="col-md-4">
+                    <label for="acctHolderName" class="form-label">Phone Number</label>
+                    <input
+                        id="acctHolderName"
+                        v-model="check.accountHolderPhoneNumber"
+                        type="text"
+                        class="form-control"
+                    />
+                </div>
                 <div class="col-md-4">
                     <label for="inputAddress" class="form-label">Address</label>
                     <input id="inputAddress" v-model="check.accountHolderAddress" type="text" class="form-control" />
@@ -220,6 +229,7 @@ const genNewCheck = () => {
         accountHolderCity: recentCheck?.accountHolderCity ?? "New York",
         accountHolderState: recentCheck?.accountHolderState ?? "NY",
         accountHolderZip: recentCheck?.accountHolderZip ?? "10001",
+        accountHolderPhoneNumber: recentCheck?.accountHolderPhoneNumber ?? "",
         bankName: recentCheck?.bankName ?? "Bank Name, INC",
         routingNumber: recentCheck?.routingNumber ?? "022303659",
         bankAccountNumber: recentCheck?.bankAccountNumber ?? "000000000000",
@@ -250,6 +260,7 @@ onMounted(() => {
         check.accountHolderCity = state.check.accountHolderCity;
         check.accountHolderState = state.check.accountHolderState;
         check.accountHolderZip = state.check.accountHolderZip;
+        check.accountHolderPhoneNumber = state.check.accountHolderPhoneNumber;
         check.checkNumber = state.check.checkNumber;
         check.date = state.check.date;
         check.bankName = state.check.bankName;

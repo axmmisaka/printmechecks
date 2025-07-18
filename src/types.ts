@@ -4,6 +4,7 @@ export interface Check {
     accountHolderCity: string;
     accountHolderState: string;
     accountHolderZip: string;
+    accountHolderPhoneNumber: string;
     checkNumber: string;
     date: string;
     bankName: string;
