@@ -1,59 +1,57 @@
 <template>
     <div id="wrapper" class="wrapper" style="position: relative">
         <div id="check-box" class="check-box">
-            <div id="check-box-print" style="position: relative">
-                <div class="account-holder-name" style="position: absolute; top: 40px; left: 60px">
-                    {{ check.accountHolderName }}
-                </div>
-                <div class="account-holder-address" style="position: absolute; top: 70px; left: 60px">
-                    {{ check.accountHolderAddress }}<br />
-                    {{ check.accountHolderCity }}, {{ check.accountHolderState }} {{ check.accountHolderZip }}<br />
-                    {{ check.accountHolderPhoneNumber ?? "" }}
-                </div>
-                <div class="check-number-human" style="position: absolute; top: 40px; left: 1060px">
-                    {{ check.checkNumber }}
-                </div>
-                <div class="date-data" style="position: absolute; top: 80px; left: 850px">
-                    {{ check.date }}
-                </div>
-                <div class="date" style="position: absolute; top: 90px; left: 760px">Date: _____________________</div>
-                <div class="amount-box" style="position: absolute; top: 175px; left: 950px" />
-                <div class="amount-data" style="position: absolute; top: 182px; left: 970px">
-                    {{ formatMoney(check.amount) }}
-                </div>
-                <div class="pay-to-data" style="position: absolute; top: 180px; left: 180px">
-                    {{ check.payTo }}
-                </div>
-                <div class="pay-to" style="position: absolute; top: 170px; left: 60px">
-                    Pay to the <br />Order of <span class="payto-line" />
-                </div>
-                <div class="amount-line-data" style="position: absolute; top: 240px; left: 100px">
-                    ***
-                    {{ toWords(check.amount) }}
-                    ***
-                </div>
-                <div class="amount-line" style="position: absolute; top: 250px; left: 60px">
-                    <span class="dollar-line" />
-                </div>
-                <div class="bank-name" style="position: absolute; top: 300px; left: 60px">
-                    {{ check.bankName }}
-                </div>
-                <div class="memo-data" style="position: absolute; top: 340px; left: 60px">
-                    <span style="font-weight: bolder;" v-if="check.memo">Memo: </span>{{ check.memo }}
-                </div>
-                <div class="signature-data" style="position: absolute; top: 366px; left: 770px">
-                    {{ check.signature }}
-                </div>
-                <div class="signature" style="position: absolute; top: 390px; left: 850px">
-                    _________________________________________________
-                </div>
-                <div class="banking" style="position: absolute; top: 420px; left: 80px">
-                    <div class="routing" style="display: inline">a{{ check.routingNumber }}a</div>
-                    <div class="bank-account" style="display: inline">{{ check.bankAccountNumber }}c</div>
-                    <div class="check-number" style="display: inline; margin-left: 20px">
-                        {{ check.checkNumber }}
+            <div class="info-block" style="position: absolute; top: 40px; left: 60px">
+                <div class="account-holder-info">
+                    <div class="account-holder-name">{{ check.accountHolderName }}</div>
+                    <div class="account-holder-address">
+                        {{ check.accountHolderAddress }}<br />
+                        {{ check.accountHolderCity }}, {{ check.accountHolderState }} {{ check.accountHolderZip }}<br />
+                        {{ check.accountHolderPhoneNumber ?? "" }}
                     </div>
                 </div>
+            </div>
+
+            <div class="date-block" style="position: absolute; top: 90px; left: 700px">
+                <span class="date-label">Date: </span>
+                <span class="date-data">{{ check.date }}</span>
+            </div>
+
+            <div class="payment-block" style="position: absolute; top: 170px; left: 60px">
+                <div class="pay-to">Pay</div>
+                <div class="amount-line">
+                    <span class="amount-text">*** {{ toWords(check.amount) }} ***</span>
+                    <span class="dollar-line"></span>
+                </div>
+
+                <div class="the-order-of">To the<br />order of</div>
+                <span class="payto-line">
+                    <div class="pay-to-data">{{ check.payTo }}</div>
+                </span>
+
+                <div class="amount-box-container">
+                    <div class="amount-box" />
+                    <div class="amount-data">{{ formatMoney(check.amount) }}</div>
+                </div>
+            </div>
+
+            <div class="check-number-human" style="position: absolute; top: 40px; left: 1060px">
+                {{ check.checkNumber }}
+            </div>
+            <div class="bank-name" style="position: absolute; top: 300px; left: 60px">
+                {{ check.bankName }}
+            </div>
+            <div class="memo-data" style="position: absolute; top: 340px; left: 60px">
+                <span v-if="check.memo" style="font-weight: bolder">Memo: </span>{{ check.memo }}
+            </div>
+            <div class="signature-block" style="position: absolute; top: 366px; left: 850px">
+                <div class="signature-data">{{ check.signature }}</div>
+                <div class="signature">_________________________________________________</div>
+            </div>
+            <div class="banking" style="position: absolute; top: 420px; left: 80px">
+                <div class="routing">a{{ check.routingNumber }}a</div>
+                <div class="bank-account">{{ check.bankAccountNumber }}c</div>
+                <div class="check-number">{{ check.checkNumber }}</div>
             </div>
         </div>
         <div class="check-data" style="position: absolute; top: 450px">
@@ -169,46 +167,7 @@ const toWords: (denom: number | string) => string = (denom) => {
 };
 
 const printCheck = () => {
-    const style = document.createElement("style");
-    style.textContent = `
-      @media print {
-        @page {
-          margin: 0;
-        }
-        body {
-          transform: scale(1);
-          transform-origin: top center;
-          width: 149%;
-          margin: 0;
-          padding: 0;
-        }
-        .wrapper > *:not(.check-box) {
-          display: none !important;
-        }
-        .check-data {
-            display: none;
-        }
-        .check-box {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          margin: 0;
-          padding: 0px;
-          background-color: white;
-          background: white !important;
-          border: none !important;
-          box-shadow: none !important;
-        }
-        .check-box-print {
-          position: relative;
-        }
-      }
-    `;
-    document.head.appendChild(style);
     window.print();
-    style.remove();
 };
 
 const saveToHistory = () => {
@@ -290,9 +249,9 @@ label {
 .signature-data {
     font-weight: bold;
 }
-.amount-line-data {
-    text-transform: capitalize;
-}
+.bank-name,
+.account-holder-name,
+.check-number-human,
 .date-data,
 .pay-to-data,
 .amount-data {
@@ -303,30 +262,6 @@ label {
     margin-top: 50px;
     padding: 50px 120px;
     border-top: 1px solid #e6e6e6;
-}
-.bank-name {
-    font-size: 20px;
-    font-weight: bold;
-}
-.account-holder-name {
-    font-size: 20px;
-    font-weight: bold;
-}
-.check-number-human {
-    font-size: 20px;
-    font-weight: bold;
-}
-.amount-box::before {
-    content: "$";
-    font-size: 20px;
-    margin-left: -15px;
-    font-weight: bold;
-}
-.amount-box {
-    width: 225px;
-    height: 40px;
-    border: 1px solid #c7c7c7;
-    background-color: white;
 }
 
 .check-box {
@@ -339,10 +274,6 @@ label {
         linear-gradient(225deg, #e9eaff 25%, transparent 25%) -10px 0/ 20px 20px,
         linear-gradient(315deg, #e9eaff55 25%, transparent 25%) 0px 0/ 20px 20px,
         linear-gradient(45deg, #e9eaff 25%, #fdfdff 25%) 0px 0/ 20px 20px;
-}
-
-#check-box {
-    width: 100%;
 }
 
 @font-face {
@@ -358,16 +289,166 @@ label {
     width: 840px;
     display: block;
     border-bottom: 1px solid black;
-    margin-left: 10px;
-    margin-top: 20px;
 }
 .payto-line {
-    width: 776px;
-    display: block;
+    width: auto;
     border-bottom: 1px solid black;
-    margin-left: 73px;
-    border-right: 1px solid black;
-    height: 28px;
-    margin-top: -32px;
+}
+
+.info-block {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
+.account-holder-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.date-block {
+    position: relative;
+    min-width: 10em;
+}
+
+.payment-block {
+    display: grid;
+    width: 1100px;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto;
+    row-gap: 20px;
+    align-items: start;
+    grid-template-areas:
+        "pay-label amount-text amount-box"
+        "order-label payto-line .";
+}
+
+.pay-to {
+    grid-column: 1;
+    grid-row: 1;
+    position: relative;
+    margin-top: auto;
+}
+.the-order-of {
+    grid-column: 1;
+    grid-row: 2;
+    position: relative;
+    min-width: 5em;
+}
+.payto-line {
+    grid-column: 2;
+    grid-row: 2;
+    position: relative;
+    margin-top: auto;
+}
+
+.amount-box-container {
+    grid-column: 3;
+    grid-row: 1;
+    position: relative;
+    width: 225px;
+    height: 100%;
+    max-height: 40px;
+    align-self: flex-end;
+}
+.amount-box {
+    width: 225px;
+    height: auto;
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #c7c7c7;
+}
+.amount-box::before {
+    content: "$";
+    position: absolute;
+    left: 0.25em;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 1;
+}
+.amount-data {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+}
+.amount-text {
+    position: relative;
+    overflow: hidden;
+}
+.amount-line {
+    max-width: 840px;
+    max-height: 45px;
+    min-height: 45px;
+    grid-column: 2;
+    grid-row: 1;
+    align-content: flex-end;
+}
+
+.signature-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.signature-data {
+    margin-bottom: -15px;
+    z-index: 1;
+}
+.banking {
+    display: flex;
+    gap: 20px;
+    font-family: "banking";
+    font-size: 37px;
+}
+
+@media print {
+    @page {
+        size: letter;
+        margin: 0;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        background: white;
+    }
+
+    .nav {
+        display: none !important;
+    }
+
+    .wrapper > *:not(.check-box) {
+        display: none !important;
+    }
+
+    .check-data {
+        display: none !important;
+    }
+
+    .check-box {
+        --original-width: 1200;
+        --target-width: 8;
+        --dpi: 96;
+
+        --scale: calc((var(--target-width) * var(--dpi)) / var(--original-width));
+
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 1200px;
+        height: 500px;
+        margin: 0;
+        padding: 0;
+        background: white !important;
+        border: none !important;
+        box-shadow: none !important;
+
+        transform: scale(var(--scale));
+        transform-origin: top left;
+    }
 }
 </style>
