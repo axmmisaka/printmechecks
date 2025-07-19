@@ -1,0 +1,66 @@
+.security-text-container {
+    display: inline-block;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 36px;
+    background-color: #f8f8f8;
+    padding: 15px;
+    border: 1px solid #ddd;
+}
+
+.security-number {
+    display: inline-block;
+    position: relative;
+    font-weight: bold;
+    color: #333;
+    margin: 0 2px;
+}
+
+.security-number::before {
+    content: "";
+    position: absolute;
+    top: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 5px;
+    font-weight: bolder;
+    color: #666;
+    letter-spacing: -0.5px;
+    font-family: sans-serif;
+}
+
+.non-digit {
+    font-weight: bold;
+    color: #333;
+    margin: 0 2px;
+}
+
+.security-number[data-num="0"]::before {
+    content: "ZERO";
+}
+.security-number[data-num="1"]::before {
+    content: "ONE";
+}
+.security-number[data-num="2"]::before {
+    content: "TWO";
+}
+.security-number[data-num="3"]::before {
+    content: "THREE";
+}
+.security-number[data-num="4"]::before {
+    content: "FOUR";
+}
+.security-number[data-num="5"]::before {
+    content: "FIVE";
+}
+.security-number[data-num="6"]::before {
+    content: "SIX";
+}
+.security-number[data-num="7"]::before {
+    content: "SEVEN";
+}
+.security-number[data-num="8"]::before {
+    content: "EIGHT";
+}
+.security-number[data-num="9"]::before {
+    content: "NINE";
+}

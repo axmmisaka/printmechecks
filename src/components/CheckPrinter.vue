@@ -32,9 +32,22 @@
                     </div>
                 </span>
 
-                <div class="amount-box-container">
+                <div v-if="useMicrodigit" class="amount-box-container">
                     <div class="amount-box" />
-                    <div class="amount-data">{{ formatMoney(check.amount) }}</div>
+                    <div class="amount-data">
+                        <template v-for="(char, index) in formatMoney(check.amount)" :key="index">
+                            <span v-if="isDigit(char)" class="security-number" :data-num="char">
+                                {{ char }}
+                            </span>
+                            <span v-else class="non-digit">
+                                {{ char }}
+                            </span>
+                        </template>
+                    </div>
+                </div>
+                <div v-else class="amount-box-container">
+                    <div class="amount-box" />
+                    <div class="amount-data">*{{ formatMoney(check.amount) }}*</div>
                 </div>
             </div>
 
@@ -126,6 +139,10 @@
                     <label for="inputMemo" class="form-label">Memo</label>
                     <textarea id="inputMemo" v-model="check.memo" spellcheck="true" class="form-control" />
                 </div>
+                <div class="col-md-6">
+                    <label for="micro-checkbox" class="form-label">Use microdigit?</label>
+                    <input id="micro-checkbox" v-model="useMicrodigit" type="checkbox" />
+                </div>
             </form>
             <form class="row g-3" style="margin-top: 30px; border-top: 1px solid #e7e7e7">
                 <div class="col-md-2">
@@ -163,12 +180,18 @@
 
 <script setup lang="ts">
 import { ToWords } from "to-words";
-import { reactive, onMounted, onUnmounted } from "vue";
+import { reactive, ref, onMounted, onUnmounted } from "vue";
 import { formatMoney } from "@/utilities.ts";
 import { useAppStore } from "../stores/app.ts";
 import { type Check } from "@/types.ts";
 
 const state = useAppStore();
+const useMicrodigit = ref<boolean>(false);
+
+const isDigit = (char: string): boolean => {
+    if (char.length !== 1) return false;
+    return char >= "0" && char <= "9";
+};
 
 const toWordsTool = new ToWords({
     localeCode: "en-US",
@@ -263,7 +286,8 @@ onUnmounted(() => {
 });
 </script>
 
-<style>
+<style lang="css" scoped>
+@import "@/components/microdigit.css";
 label {
     font-weight: bold;
 }
@@ -289,6 +313,12 @@ label {
 .amount-data {
     font-size: 20px;
     font-weight: bold;
+}
+
+.amount-data {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .conditions {
