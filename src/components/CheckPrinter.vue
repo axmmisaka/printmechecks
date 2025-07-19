@@ -27,6 +27,9 @@
                 <div class="the-order-of">To the<br />order of</div>
                 <span class="payto-line">
                     <div class="pay-to-data">{{ check.payTo }}</div>
+                    <div v-if="check.additionalPayToInfo" class="additional-pay-to-data" style="margin-top: -0.5em">
+                        {{ check.additionalPayToInfo }}
+                    </div>
                 </span>
 
                 <div class="amount-box-container">
@@ -138,6 +141,15 @@
                     <input id="inputDate" v-model="check.date" type="text" class="form-control" />
                 </div>
                 <div class="col-md-6">
+                    <label for="inputPaytoAdditionalInfo" class="form-label">Additional Pay To Info</label>
+                    <input
+                        id="inputPaytoAdditionalInfo"
+                        v-model="check.additionalPayToInfo"
+                        type="text"
+                        class="form-control"
+                    />
+                </div>
+                <div class="col-md-6">
                     <label for="inputSignature" class="form-label">Signature</label>
                     <input id="inputSignature" v-model="check.signature" type="text" class="form-control" />
                 </div>
@@ -204,6 +216,7 @@ const genNewCheck = () => {
         date: new Date().toLocaleDateString(),
         condition: recentCheck?.condition ?? "Not Negotiable",
         amount: "0.00",
+        additionalPayToInfo: "",
         payTo: "",
         memo: "",
     };
@@ -234,6 +247,7 @@ onMounted(() => {
         check.bankName = state.check.bankName;
         check.amount = state.check.amount;
         check.payTo = state.check.payTo;
+        check.additionalPayToInfo = state.check.additionalPayToInfo;
         check.memo = state.check.memo;
         check.signature = state.check.signature;
         check.routingNumber = state.check.routingNumber;
@@ -316,6 +330,7 @@ label {
     border-bottom: 1px solid black;
 }
 .payto-line {
+    max-height: 48px;
     width: auto;
     border-bottom: 1px solid black;
 }

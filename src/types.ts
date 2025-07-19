@@ -11,6 +11,7 @@ export interface Check {
     bankName: string;
     amount: string;
     payTo: string;
+    additionalPayToInfo: string;
     memo: string;
     signature: string;
     routingNumber: string;
