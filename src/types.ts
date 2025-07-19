@@ -7,6 +7,7 @@ export interface Check {
     accountHolderPhoneNumber: string;
     checkNumber: string;
     date: string;
+    condition: string;
     bankName: string;
     amount: string;
     payTo: string;

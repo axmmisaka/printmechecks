@@ -38,8 +38,14 @@
             <div class="check-number-human" style="position: absolute; top: 40px; left: 1060px">
                 {{ check.checkNumber }}
             </div>
-            <div class="bank-name" style="position: absolute; top: 300px; left: 60px">
-                {{ check.bankName }}
+            <div class="bank-and-condition">
+                <span class="bank-name" style="margin-left: 60px">
+                    {{ check.bankName }}
+                </span>
+
+                <span class="conditions" style="margin-right: 60px; float: right">
+                    {{ check.condition }}
+                </span>
             </div>
             <div class="memo-data" style="position: absolute; top: 340px; left: 60px">
                 <span v-if="check.memo" style="font-weight: bolder">Memo: </span>{{ check.memo }}
@@ -105,9 +111,13 @@
                     <label for="inputRouting" class="form-label">Routing #</label>
                     <input id="inputRouting" v-model="check.routingNumber" type="text" class="form-control" />
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <label for="inputAcctNo" class="form-label">Account #</label>
                     <input id="inputAcctNo" v-model="check.bankAccountNumber" type="text" class="form-control" />
+                </div>
+                <div class="col-md-4">
+                    <label for="inputConds" class="form-label">Conditions</label>
+                    <input id="inputConds" v-model="check.condition" type="text" class="form-control" />
                 </div>
                 <div class="col-md-6">
                     <label for="inputMemo" class="form-label">Memo</label>
@@ -192,6 +202,7 @@ const genNewCheck = () => {
         signature: recentCheck?.signature ?? "John Smith",
         checkNumber: recentCheck?.checkNumber ? `${parseInt(recentCheck?.checkNumber) + 1}` : "100",
         date: new Date().toLocaleDateString(),
+        condition: recentCheck?.condition ?? "Not Negotiable",
         amount: "0.00",
         payTo: "",
         memo: "",
@@ -218,6 +229,7 @@ onMounted(() => {
         check.accountHolderZip = state.check.accountHolderZip;
         check.accountHolderPhoneNumber = state.check.accountHolderPhoneNumber;
         check.checkNumber = state.check.checkNumber;
+        check.condition = state.check.condition;
         check.date = state.check.date;
         check.bankName = state.check.bankName;
         check.amount = state.check.amount;
@@ -249,6 +261,12 @@ label {
 .signature-data {
     font-weight: bold;
 }
+.bank-and-condition {
+    position: relative;
+    top: 300px;
+    width: 100%;
+}
+
 .bank-name,
 .account-holder-name,
 .check-number-human,
@@ -258,6 +276,13 @@ label {
     font-size: 20px;
     font-weight: bold;
 }
+
+.conditions {
+    font-weight: bold;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
 .check-data {
     margin-top: 50px;
     padding: 50px 120px;
