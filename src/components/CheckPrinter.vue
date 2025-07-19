@@ -67,9 +67,9 @@
                     <input id="acctHolderName" v-model="check.accountHolderName" type="text" class="form-control" />
                 </div>
                 <div class="col-md-4">
-                    <label for="acctHolderName" class="form-label">Phone Number</label>
+                    <label for="acctHolderPhone" class="form-label">Phone Number</label>
                     <input
-                        id="acctHolderName"
+                        id="acctHolderPhone"
                         v-model="check.accountHolderPhoneNumber"
                         type="text"
                         class="form-control"
@@ -98,20 +98,20 @@
                     <input id="inputCheckNum" v-model="check.checkNumber" type="text" class="form-control" />
                 </div>
                 <div class="col-md-4">
-                    <label for="inputAddress" class="form-label">Bank Name</label>
-                    <input id="inputAddress" v-model="check.bankName" type="text" class="form-control" />
+                    <label for="inputBankName" class="form-label">Bank Name</label>
+                    <input id="inputBankName" v-model="check.bankName" type="text" class="form-control" />
                 </div>
                 <div class="col-md-2">
-                    <label for="inputCity" class="form-label">Routing #</label>
-                    <input v-model="check.routingNumber" type="text" class="form-control" />
+                    <label for="inputRouting" class="form-label">Routing #</label>
+                    <input id="inputRouting" v-model="check.routingNumber" type="text" class="form-control" />
                 </div>
                 <div class="col-md-2">
-                    <label for="inputState" class="form-label">Account #</label>
-                    <input v-model="check.bankAccountNumber" type="text" class="form-control" />
+                    <label for="inputAcctNo" class="form-label">Account #</label>
+                    <input id="inputAcctNo" v-model="check.bankAccountNumber" type="text" class="form-control" />
                 </div>
                 <div class="col-md-6">
-                    <label for="inputZip" class="form-label">Memo</label>
-                    <textarea v-model="check.memo" spellcheck="true" class="form-control" />
+                    <label for="inputMemo" class="form-label">Memo</label>
+                    <textarea id="inputMemo" v-model="check.memo" spellcheck="true" class="form-control" />
                 </div>
             </form>
             <form class="row g-3" style="margin-top: 30px; border-top: 1px solid #e7e7e7">
@@ -120,16 +120,16 @@
                     <input id="inputCheckAmount" v-model="check.amount" type="text" class="form-control" />
                 </div>
                 <div class="col-md-6">
-                    <label for="inputZip" class="form-label">Pay To</label>
-                    <input v-model="check.payTo" type="text" class="form-control" />
+                    <label for="inputPayto" class="form-label">Pay To</label>
+                    <input id="inputPayto" v-model="check.payTo" type="text" class="form-control" />
                 </div>
                 <div class="col-md-2">
                     <label for="inputDate" class="form-label">Date</label>
                     <input id="inputDate" v-model="check.date" type="text" class="form-control" />
                 </div>
                 <div class="col-md-6">
-                    <label for="inputZip" class="form-label">Signature</label>
-                    <input v-model="check.signature" type="text" class="form-control" />
+                    <label for="inputSignature" class="form-label">Signature</label>
+                    <input id="inputSignature" v-model="check.signature" type="text" class="form-control" />
                 </div>
             </form>
             <div class="col-12" style="margin-top: 30px">
