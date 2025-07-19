@@ -1,6 +1,7 @@
 <template>
     <div id="wrapper" class="wrapper" style="position: relative">
         <div id="check-box" class="check-box">
+            <div v-if="isVoidCheck" class="void-check">VOID</div>
             <div class="info-block" style="position: absolute; top: 40px; left: 60px">
                 <div class="account-holder-info">
                     <div class="account-holder-name">{{ check.accountHolderName }}</div>
@@ -143,6 +144,10 @@
                     <label for="micro-checkbox" class="form-label">Use microdigit?</label>
                     <input id="micro-checkbox" v-model="useMicrodigit" type="checkbox" />
                 </div>
+                <div class="col-md-6">
+                    <label for="void-checkbox" class="form-label">Void check?</label>
+                    <input id="void-checkbox" v-model="isVoidCheck" type="checkbox" />
+                </div>
             </form>
             <form class="row g-3" style="margin-top: 30px; border-top: 1px solid #e7e7e7">
                 <div class="col-md-2">
@@ -187,6 +192,7 @@ import { type Check } from "@/types.ts";
 
 const state = useAppStore();
 const useMicrodigit = ref<boolean>(false);
+const isVoidCheck = ref<boolean>(false);
 
 const isDigit = (char: string): boolean => {
     if (char.length !== 1) return false;
@@ -458,7 +464,16 @@ label {
     grid-row: 1;
     align-content: flex-end;
 }
-
+.void-check {
+    display: inline-block;
+    z-index: 2;
+    position: absolute;
+    font-size: 20em;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: rgba(0, 0, 0, 0.5);
+}
 .signature-block {
     display: flex;
     flex-direction: column;
