@@ -266,7 +266,7 @@ label {
 
 .check-box {
     width: 1200px;
-    height: 500px;
+    height: 494px;
     margin: 0 auto;
     background-color: #e5e5f7;
     background:
@@ -403,52 +403,5 @@ label {
     gap: 20px;
     font-family: "banking";
     font-size: 37px;
-}
-
-@media print {
-    @page {
-        size: letter;
-        margin: 0;
-    }
-
-    body {
-        margin: 0;
-        padding: 0;
-        background: white;
-    }
-
-    .nav {
-        display: none !important;
-    }
-
-    .wrapper > *:not(.check-box) {
-        display: none !important;
-    }
-
-    .check-data {
-        display: none !important;
-    }
-
-    .check-box {
-        --original-width: 1200;
-        --target-width: 8;
-        --dpi: 96;
-
-        --scale: calc((var(--target-width) * var(--dpi)) / var(--original-width));
-
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 1200px;
-        height: 500px;
-        margin: 0;
-        padding: 0;
-        background: white !important;
-        border: none !important;
-        box-shadow: none !important;
-
-        transform: scale(var(--scale));
-        transform-origin: top left;
-    }
 }
 </style>
