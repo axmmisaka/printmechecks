@@ -9,27 +9,37 @@
                 <thead>
                     <tr>
                         <th>Check #</th>
+                        <th>Date</th>
+                        <th>Bank</th>
+                        <th>Routing #</th>
+                        <th>Account #</th>
+                        <th>Payer & Address</th>
+                        <th>Payee & Info</th>
                         <th>Amount</th>
-                        <th>Payee</th>
-                        <th>Account</th>
                         <th />
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(item, index) in history" :key="item.id">
+                    <tr v-for="(item, index) in history" :key="index">
                         <td>{{ item.checkNumber }}</td>
-                        <td>${{ formatMoney(item.amount) }}</td>
-                        <td>{{ item.payTo }}</td>
+                        <td>{{ item.date }}</td>
+                        <td>{{ item.bankName }}</td>
+                        <td>{{ item.routingNumber }}</td>
                         <td>{{ item.bankAccountNumber }}</td>
+                        <td>
+                            {{ item.accountHolderName }}, {{ item.accountHolderAddress }} {{ item.accountHolderCity }}
+                            {{ item.accountHolderState }} {{ item.accountHolderZip }}
+                        </td>
+                        <td>{{ item.payTo }} {{ item.additionalPayToInfo }}</td>
+                        <td>${{ formatMoney(item.amount) }}</td>
                         <td>
                             <button
                                 class="btn btn-outline-danger"
                                 style="margin-right: 10px"
-                                @click="deleteItem(index)"
+                                @click="deleteHistoryItem(history, index)"
                             >
                                 Delete
                             </button>
-                            <button class="btn btn-outline-primary" @click="viewItem(index)">View</button>
                         </td>
                     </tr>
                 </tbody>
@@ -39,33 +49,14 @@
 </template>
 
 <script setup lang="ts">
-import { formatMoney } from "../utilities.ts";
-import { ref, onMounted } from "vue";
-import { useAppStore } from "../stores/app.ts";
-import { useRouter } from "vue-router";
+import type { Check } from "@/types.ts";
+import { deleteHistoryItem, formatMoney, loadHistory } from "../utilities.ts";
+import { ref, onMounted, type Ref } from "vue";
 
-const state = useAppStore();
-const router = useRouter();
-
-const history = ref([]);
-
-const loadHistory = () => {
-    history.value = JSON.parse(localStorage.getItem("checkList") || "[]");
-};
-
-const deleteItem = (index) => {
-    history.value.splice(index, 1);
-    localStorage.setItem("checkList", JSON.stringify(history.value));
-};
-
-const viewItem = (index) => {
-    const item = history.value[index];
-    state.check = item;
-    router.push("/");
-};
+const history: Ref<Check[]> = ref([]);
 
 onMounted(() => {
-    loadHistory();
+    loadHistory(history);
 });
 </script>
 

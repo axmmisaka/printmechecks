@@ -177,7 +177,7 @@
                 </div>
             </form>
             <div class="col-12" style="margin-top: 30px">
-                <button type="button" class="btn btn-primary" @click="saveToHistory">Save to History</button>
+                <button type="button" class="btn btn-primary" @click="saveToHistory(check)">Save to History</button>
             </div>
         </div>
     </div>
@@ -186,7 +186,7 @@
 <script setup lang="ts">
 import { ToWords } from "to-words";
 import { reactive, ref, onMounted, onUnmounted } from "vue";
-import { formatMoney } from "@/utilities.ts";
+import { formatMoney, saveToHistory } from "@/utilities.ts";
 import { useAppStore } from "../stores/app.ts";
 import { type Check } from "@/types.ts";
 
@@ -219,12 +219,6 @@ const toWords: (denom: number | string) => string = (denom) => {
 
 const printCheck = () => {
     window.print();
-};
-
-const saveToHistory = () => {
-    let checkList = JSON.parse(localStorage.getItem("checkList") || "[]");
-    checkList.push(check);
-    localStorage.setItem("checkList", JSON.stringify(checkList));
 };
 
 const genNewCheck = () => {
